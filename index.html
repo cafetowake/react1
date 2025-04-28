@@ -1,122 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <!-- React -->
-        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-        <!-- ReactDOM -->
-        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-        <!-- Babel para procesar JSX -->
-        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<head>
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <!-- ReactDOM -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para procesar JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-        <title>React y CDN</title>
+    <title>React y CDN</title>
 
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f0f0f0;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #root {
+            width: 80%;
+            max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .comment-form {
+            margin-bottom: 20px;
+        }
+        .comment-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .comment-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .comment-list {
+            list-style: none;
+            padding: 0;
+        }
+        .comment-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .comment-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="root">
+
+        <script type="text/babel">
+            function Greeting() {
+                return <h1>¡Hola, bienvenido a React!</h1>;
             }
-            #root {
-                width: 80%;
-                max-width: 600px;
-                background-color: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            function CommentForm({ onCommentSubmit }) {
+                const [comment, setComment] = React.useState('');
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    if (comment.trim() !== '') {
+                        onCommentSubmit(comment);
+                        setComment('');
+                    }
+                };
+
+                return (
+                    <form className="comment-form" onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            placeholder="Escribe tu comentario..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <button type="submit">Enviar comentario</button>
+                    </form>
+                );
             }
-            .comment-form {
-                margin-bottom: 20px;
+
+            function App() {
+                const [comments, setComments] = React.useState([]);
+
+                const handleCommentSubmit = (newComment) => {
+                    setComments([...comments, newComment]);
+                };
+
+                return (
+                    <div>
+                        <Greeting />
+                        <CommentForm onCommentSubmit={handleCommentSubmit} />
+                        <h2>Comentarios:</h2>
+                        <ul className="comment-list">
+                            {comments.map((comment, index) => (
+                                <li key={index}>{comment}</li>
+                            ))}
+                        </ul>
+                    </div>
+                );
             }
-            .comment-form input[type="text"] {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                margin-bottom: 10px;
-            }
-            .comment-form button {
-                background-color: #3498db;
-                color: white;
-                padding: 10px 15px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-            .comment-list {
-                list-style: none;
-                padding: 0;
-            }
-            .comment-list li {
-                padding: 10px;
-                border-bottom: 1px solid #eee;
-            }
-            .comment-list li:last-child {
-                border-bottom: none;
-            }
-        </style>
 
-    </head>
-    <body>
-        <div id="root">
-
-            <script type="text/babel">
-                function Greeting() {
-                    return <h1>¡Hola, bienvenido a React!</h1>;
-                }
-
-                function CommentForm({ onCommentSubmit }) {
-                    const [comment, setComment] = React.useState('');
-
-                    const handleSubmit = (e) => {
-                        e.preventDefault();
-                        if (comment.trim() !== '') {
-                            onCommentSubmit(comment);
-                            setComment('');
-                        }
-                    };
-
-                    return (
-                        <form className="comment-form" onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                placeholder="Escribe tu comentario..."
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                            />
-                            <button type="submit">Enviar comentario</button>
-                        </form>
-                    );
-                }
-
-                function App() {
-                    const [comments, setComments] = React.useState([]);
-
-                    const handleCommentSubmit = (newComment) => {
-                        setComments([...comments, newComment]);
-                    };
-
-                    return (
-                        <div>
-                            <Greeting />
-                            <CommentForm onCommentSubmit={handleCommentSubmit} />
-                            <h2>Comentarios:</h2>
-                            <ul className="comment-list">
-                                {comments.map((comment, index) => (
-                                    <li key={index}>{comment}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    );
-                }
-
-                const root = ReactDOM.createRoot(document.getElementById('root'));
-                root.render(<App />);
-            </script>
-        </div>
-    </body>
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+        </script>
+    </div>
+</body>
 </html>
