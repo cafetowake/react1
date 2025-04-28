@@ -62,60 +62,61 @@
 
     </head>
     <body>
-        <div id="root"></div>
+        <div id="root">
 
-        <script type="text/babel">
-            function Greeting() {
-                return <h1>¡Hola, bienvenido a React!</h1>;
-            }
+            <script type="text/babel">
+                function Greeting() {
+                    return <h1>¡Hola, bienvenido a React!</h1>;
+                }
 
-            function CommentForm({ onCommentSubmit }) {
-                const [comment, setComment] = React.useState('');
+                function CommentForm({ onCommentSubmit }) {
+                    const [comment, setComment] = React.useState('');
 
-                const handleSubmit = (e) => {
-                    e.preventDefault();
-                    if (comment.trim() !== '') {
-                        onCommentSubmit(comment);
-                        setComment('');
-                    }
-                };
+                    const handleSubmit = (e) => {
+                        e.preventDefault();
+                        if (comment.trim() !== '') {
+                            onCommentSubmit(comment);
+                            setComment('');
+                        }
+                    };
 
-                return (
-                    <form className="comment-form" onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            placeholder="Escribe tu comentario..."
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                        />
-                        <button type="submit">Enviar comentario</button>
-                    </form>
-                );
-            }
+                    return (
+                        <form className="comment-form" onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                placeholder="Escribe tu comentario..."
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                            <button type="submit">Enviar comentario</button>
+                        </form>
+                    );
+                }
 
-            function App() {
-                const [comments, setComments] = React.useState([]);
+                function App() {
+                    const [comments, setComments] = React.useState([]);
 
-                const handleCommentSubmit = (newComment) => {
-                    setComments([...comments, newComment]);
-                };
+                    const handleCommentSubmit = (newComment) => {
+                        setComments([...comments, newComment]);
+                    };
 
-                return (
-                    <div>
-                        <Greeting />
-                        <CommentForm onCommentSubmit={handleCommentSubmit} />
-                        <h2>Comentarios:</h2>
-                        <ul className="comment-list">
-                            {comments.map((comment, index) => (
-                                <li key={index}>{comment}</li>
-                            ))}
-                        </ul>
-                    </div>
-                );
-            }
+                    return (
+                        <div>
+                            <Greeting />
+                            <CommentForm onCommentSubmit={handleCommentSubmit} />
+                            <h2>Comentarios:</h2>
+                            <ul className="comment-list">
+                                {comments.map((comment, index) => (
+                                    <li key={index}>{comment}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    );
+                }
 
-            const root = ReactDOM.createRoot(document.getElementById('root'));
-            root.render(<App />);
-        </script>
+                const root = ReactDOM.createRoot(document.getElementById('root'));
+                root.render(<App />);
+            </script>
+        </div>
     </body>
 </html>
