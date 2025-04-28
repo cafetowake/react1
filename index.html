@@ -18,9 +18,53 @@
                 return <h1>¡Hola, bienvenido a React!</h1>;
             }
 
-            const root = ReactDOM.createRoot(document.getElementById('root'));
-            root.render(<Greeting />);
+            function CommentForm({ onCommentSubmit }) {
+                const [comment, setComment] = React.useState('');
 
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    if (comment.trim() !== '') {
+                        onCommentSubmit(comment);
+                        setComment('');
+                    }
+                };
+
+                return (
+                    <form className="comment-form" onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            placeholder="Escribe tu comentario..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <button type="submit">Enviar comentario</button>
+                    </form>
+                );
+            }
+
+            function App() {
+                const [comments, setComments] = React.useState([]);
+
+                const handleCommentSubmit = (newComment) => {
+                    setComments([...comments, newComment]);
+                };
+
+                return (
+                    <div>
+                        <Greeting />
+                        <CommentForm onCommentSubmit={handleCommentSubmit} />
+                        <h2>Comentarios:</h2>
+                        <ul className="comment-list">
+                            {comments.map((comment, index) => (
+                                <li key={index}>{comment}</li>
+                            ))}
+                        </ul>
+                    </div>
+                );
+            }
+
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
         </script>
     </body>
 </html>
